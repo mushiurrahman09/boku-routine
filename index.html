@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>📅 BOKU Semester 3 Timetable – Winter 2025/26</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- External CSS -->
+  <link rel="stylesheet" href="styles.css">
+   <!-- Auth script must be loaded first -->
+  <script src="auth.js"></script>
+  <script>
+    // Immediately check login before showing anything
+    requireAuth();
+  </script>
+</head>
+<body>
+  <!-- Loader -->
+<div id="loader">
+  <div class="loading-text"></div>
+</div>
+
+<!-- Content -->
+<div id="content">
+  <!-- Exam Routine Button on Top Right -->
+  <!-- Header Controls -->
+<div class="header-controls">
+  <div class="top-left">
+    <label>
+      <input type="checkbox" id="conflictCheck" onchange="checkConflicts()"> Show Course Conflicts
+    </label>
+  </div>
+  <div class="top-right">
+    <button class="exam-btn" onclick="window.location.href='exam.html'">📝 Exam Routine</button>
+    <button class="logout-btn" onclick="logout()">🔓 Logout</button>
+  </div>
+</div>
+
+  <h2>📅 Semester 3 – BOKU Course Timetable (Winter 2025/26)</h2>
+  <p style="text-align:center; font-style:italic;">
+    Programme: EMPLANT+ Erasmus Mundus in Plant Breeding<br>
+    Student: Anika Ibnat Raida
+  </p>
+
+  <!-- Filters -->
+  <div class="filter">
+    <label for="course">Filter by Course: </label>
+    <select id="course" onchange="filterTable()">
+      <option value="all">All</option>
+      <option value="Molecular Plant Breeding">Molecular Plant Breeding</option>
+      <option value="Molecular Plant Breeding Practical">Molecular Plant Breeding Practical</option>
+      <option value="Advanced Insights and Molecular Methods in Plant Protection">Advanced Insights and Molecular Methods in Plant Protection</option>
+      <option value="Plant Breeding – Principles & Methods">Plant Breeding – Principles & Methods</option>
+      <option value="Plant Breeding – Practical Exercises">Plant Breeding – Practical Exercises</option>
+      <option value="Resistance breeding of crop plants">Resistance breeding of crop plants</option>
+      <option value="Genetics of diversity">Genetics of diversity</option>
+    </select>
+  </div>
+
+  <div class="filter">
+    <label for="datePicker">Filter by Date: </label>
+    <input type="date" id="datePicker" onchange="filterTable()">
+    <button onclick="resetDateFilter()">Reset</button>
+  </div>
+
+
+    <!-- Mini Loader -->
+    <div id="miniLoader"><div class="mini-loading"></div></div>
+
+    <!-- Timetable -->
+    <table id="timetable">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Course</th>
+          <th>Location</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Table Data -->
+        <!-- Plant Breeding – Principles & Methods -->
+         <!-- <tr><td>01.10.2025</td><td>09:00–10:30, 12:15–13:45</td><td>Plant Breeding – Principles & Methods</td><td>SR 22 / MENH</td></tr> -->
+        <tr><td>06.10.2025</td><td>10:30–12:00, 12:15–13:45</td><td>Plant Breeding – Principles & Methods</td><td>SR 22 / MENH</td></tr>
+        <tr><td>13.10.2025</td><td>10:30–12:00, 12:15–13:45</td><td>Plant Breeding – Principles & Methods</td><td>SR 22 / MENH</td></tr>
+        <tr><td>20.10.2025</td><td>10:30–12:00, 12:15–13:45</td><td>Plant Breeding – Principles & Methods</td><td>SR 22 / MENH</td></tr>
+        <tr><td>27.10.2025</td><td>10:30–12:00, 12:15–13:45</td><td>Plant Breeding – Principles & Methods</td><td>SR 22 / MENH</td></tr>
+        <tr><td>03.11.2025</td><td>10:30–12:00, 12:15–13:45</td><td>Plant Breeding – Principles & Methods</td><td>SR 22 / MENH</td></tr>
+        <tr><td>10.11.2025</td><td>10:30–12:00, 12:15–13:45</td><td>Plant Breeding – Principles & Methods</td><td>SR 22 / MENH</td></tr>
+        <tr><td>17.11.2025</td><td>10:30–12:00, 12:15–13:45</td><td>Plant Breeding – Principles & Methods</td><td>SR 22 / MENH</td></tr>
+
+        <!-- Plant Breeding – Practical Exercises -->
+        <tr><td>24.11.2025</td><td>10:30–12:00, 12:15–13:45</td><td>Plant Breeding – Practical Exercises</td><td>SR 22 / MENH</td></tr>
+        <tr><td>01.12.2025</td><td>10:30–12:00, 12:15–13:45</td><td>Plant Breeding – Practical Exercises</td><td>SR 22 / MENH</td></tr>
+        <tr><td>15.12.2025</td><td>10:30–12:00, 12:15–13:45</td><td>Plant Breeding – Practical Exercises</td><td>SR 22 / MENH</td></tr>
+        <tr><td>12.01.2026</td><td>10:30–12:00, 12:15–13:45</td><td>Plant Breeding – Practical Exercises</td><td>SR 22 / MENH</td></tr>
+        <tr><td>19.01.2026</td><td>10:30–12:00, 12:15–13:45</td><td>Plant Breeding – Practical Exercises</td><td>SR 22 / MENH</td></tr>
+        <tr><td>26.01.2026</td><td>10:30–12:00, 12:15–13:45</td><td>Plant Breeding – Practical Exercises</td><td>SR 22 / MENH</td></tr>
+
+        <!-- Advanced Insights and Molecular Methods in Plant Protection -->
+        <tr><td>01.10.2025</td><td>09:00–10:30</td><td>Advanced Insights and Molecular Methods in Plant Protection</td><td>SR 22 / MENH</td></tr>
+        <tr><td>08.10.2025</td><td>09:00–10:30</td><td>Advanced Insights and Molecular Methods in Plant Protection</td><td>SR 22 / MENH</td></tr>
+        <tr><td>15.10.2025</td><td>09:00–10:30</td><td>Advanced Insights and Molecular Methods in Plant Protection</td><td>SR 22 / MENH</td></tr>
+        <tr><td>22.10.2025</td><td>09:00–10:30</td><td>Advanced Insights and Molecular Methods in Plant Protection</td><td>SR 22 / MENH</td></tr>
+        <tr><td>29.10.2025</td><td>09:00–10:30</td><td>Advanced Insights and Molecular Methods in Plant Protection</td><td>SR 22 / MENH</td></tr>
+        <tr><td>05.11.2025</td><td>09:00–10:30</td><td>Advanced Insights and Molecular Methods in Plant Protection</td><td>SR 22 / MENH</td></tr>
+        <tr><td>12.11.2025</td><td>09:00–10:30</td><td>Advanced Insights and Molecular Methods in Plant Protection</td><td>SR 22 / MENH</td></tr>
+        <tr><td>19.11.2025</td><td>09:00–10:30</td><td>Advanced Insights and Molecular Methods in Plant Protection</td><td>SR 22 / MENH</td></tr>
+        <tr><td>26.11.2025</td><td>09:00–10:30</td><td>Advanced Insights and Molecular Methods in Plant Protection</td><td>SR 22 / MENH</td></tr>
+        <tr><td>03.12.2025</td><td>09:00–10:30</td><td>Advanced Insights and Molecular Methods in Plant Protection</td><td>SR 22 / MENH</td></tr>
+        <tr><td>10.12.2025</td><td>09:00–10:30</td><td>Advanced Insights and Molecular Methods in Plant Protection</td><td>SR 22 / MENH</td></tr>
+        <tr><td>17.12.2025</td><td>09:00–10:30</td><td>Advanced Insights and Molecular Methods in Plant Protection</td><td>SR 22 / MENH</td></tr>
+        <tr><td>07.01.2026</td><td>09:00–10:30</td><td>Advanced Insights and Molecular Methods in Plant Protection</td><td>SR 22 / MENH</td></tr>
+        <tr><td>14.01.2026</td><td>09:00–10:30</td><td>Advanced Insights and Molecular Methods in Plant Protection</td><td>SR 22 / MENH</td></tr>
+        <tr><td>21.01.2026</td><td>09:00–10:30</td><td>Advanced Insights and Molecular Methods in Plant Protection</td><td>SR 22 / MENH</td></tr>
+        <tr><td>28.01.2026</td><td>09:00–10:30</td><td>Advanced Insights and Molecular Methods in Plant Protection</td><td>SR 22 / MENH</td></tr>
+
+        <!-- Molecular Plant Breeding Lecture -->
+        <tr><td>07.10.2025</td><td>08:00–09:30</td><td>Molecular Plant Breeding</td><td>HS 11 / MENH</td></tr>
+        <tr><td>14.10.2025</td><td>08:00–09:30</td><td>Molecular Plant Breeding</td><td>HS 11 / MENH</td></tr>
+        <tr><td>21.10.2025</td><td>08:00–09:30</td><td>Molecular Plant Breeding</td><td>HS 11 / MENH</td></tr>
+        <tr><td>28.10.2025</td><td>08:00–09:30</td><td>Molecular Plant Breeding</td><td>HS 11 / MENH</td></tr>
+        <tr><td>04.11.2025</td><td>08:00–09:30</td><td>Molecular Plant Breeding</td><td>SR 34</td></tr>
+        <tr><td>11.11.2025</td><td>08:00–09:30</td><td>Molecular Plant Breeding</td><td>SR 34</td></tr>
+        <tr><td>18.11.2025</td><td>08:00–09:30</td><td>Molecular Plant Breeding</td><td>HS 11 / MENH</td></tr>
+        <tr><td>25.11.2025</td><td>08:00–09:30</td><td>Molecular Plant Breeding</td><td>HS 11 / MENH</td></tr>
+        <tr><td>02.12.2025</td><td>08:00–09:30</td><td>Molecular Plant Breeding</td><td>HS 11 / MENH</td></tr>
+        <tr><td>09.12.2025</td><td>08:00–09:30</td><td>Molecular Plant Breeding</td><td>HS 11 / MENH</td></tr>
+        <tr><td>16.12.2025</td><td>08:00–09:30</td><td>Molecular Plant Breeding</td><td>HS 11 / MENH</td></tr>
+        <tr><td>13.01.2026</td><td>08:15–09:45</td><td>Molecular Plant Breeding</td><td>HS 11 / MENH</td></tr>
+        <tr><td>20.01.2026</td><td>08:00–09:30</td><td>Molecular Plant Breeding</td><td>HS 11 / MENH</td></tr>
+        <tr><td>27.01.2026</td><td>08:00–09:30</td><td>Molecular Plant Breeding</td><td>HS 11 / MENH</td></tr>
+
+        <!-- Molecular Plant Breeding Practical -->
+        <tr><td>16.02.2026</td><td>08:30–17:00</td><td>Molecular Plant Breeding Practical</td><td>MUG3 + IFA Seminarraum</td></tr>
+        <tr><td>17.02.2026</td><td>08:30–17:00</td><td>Molecular Plant Breeding Practical</td><td>MUG3 + IFA Seminarraum</td></tr>
+        <tr><td>18.02.2026</td><td>08:30–17:00</td><td>Molecular Plant Breeding Practical</td><td>MUG3 + IFA Seminarraum</td></tr>
+        <tr><td>19.02.2026</td><td>08:30–17:00</td><td>Molecular Plant Breeding Practical</td><td>MUG3 + IFA Seminarraum</td></tr>
+        <tr><td>20.02.2026</td><td>08:30–17:00</td><td>Molecular Plant Breeding Practical</td><td>MUG3 + IFA Seminarraum</td></tr>
+
+        <!-- Resistance breeding of crop plants -->
+        <tr><td>10.10.2025</td><td>10:00–12:00</td><td>Resistance breeding of crop plants</td><td>SR 22 / MENH</td></tr>
+
+        <!-- Genetics of diversity -->
+        <tr><td>07.10.2025</td><td>12:30–14:00</td><td>Genetics of diversity</td><td>SR 23 / MENH</td></tr>
+        <tr><td>14.10.2025</td><td>12:30–14:00</td><td>Genetics of diversity</td><td>SR 23 / MENH</td></tr>
+        <tr><td>21.10.2025</td><td>12:30–14:00</td><td>Genetics of diversity</td><td>SR 23 / MENH</td></tr>
+        <tr><td>28.10.2025</td><td>12:30–14:00</td><td>Genetics of diversity</td><td>SR 23 / MENH</td></tr>
+        <tr><td>04.11.2025</td><td>12:30–14:00</td><td>Genetics of diversity</td><td>SR 23 / MENH</td></tr>
+        <tr><td>11.11.2025</td><td>12:30–14:00</td><td>Genetics of diversity</td><td>SR 23 / MENH</td></tr>
+        <tr><td>18.11.2025</td><td>12:30–14:00</td><td>Genetics of diversity</td><td>SR 23 / MENH</td></tr>
+        <tr><td>25.11.2025</td><td>12:30–14:00</td><td>Genetics of diversity</td><td>SR 23 / MENH</td></tr>
+        <tr><td>02.12.2025</td><td>12:30–14:00</td><td>Genetics of diversity</td><td>SR 23 / MENH</td></tr>
+        <tr><td>09.12.2025</td><td>12:30–14:00</td><td>Genetics of diversity</td><td>SR 23 / MENH</td></tr>
+        <tr><td>16.12.2025</td><td>12:30–14:00</td><td>Genetics of diversity</td><td>SR 23 / MENH</td></tr>
+        <tr><td>13.01.2026</td><td>12:30–14:00</td><td>Genetics of diversity</td><td>SR 23 / MENH</td></tr>
+        <tr><td>20.01.2026</td><td>12:30–14:00</td><td>Genetics of diversity</td><td>SR 23 / MENH</td></tr>
+        <tr><td>27.01.2026</td><td>12:30–14:00</td><td>Genetics of diversity</td><td>SR 23 / MENH</td></tr>
+
+      </tbody>
+    </table>
+  </div>
+
+  <!-- External JS -->
+  <script src="scripts.js"></script>
+</body>
+</html>

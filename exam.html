@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>📝 BOKU Exam Routine – Winter 2025/26</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <!-- Auth script must be loaded first -->
+  <script src="auth.js"></script>
+  <script>
+    // Immediately check login before showing anything
+    requireAuth();
+  </script>
+</head>
+<body>
+  <!-- Loader -->
+  <div id="loader">
+    <div class="loading-text">📝 Loading Exams...</div>
+  </div>
+
+  <!-- Content -->
+  <div id="content" style="display:none; opacity:0;">
+    <!-- Homepage Button -->
+    <div class="top-right">
+      <button class="home-btn" onclick="window.location.href='index.html'">🏠 Homepage</button>
+    </div>
+
+    <!-- Page Title -->
+    <h2>📝 Exam Routine – Winter 2025/26</h2>
+    <p class="subtitle">
+      Programme: EMPLANT+ Erasmus Mundus in Plant Breeding<br>
+      Student: Anika Ibnat Raida
+    </p>
+
+    <!-- Filters -->
+    <div class="filter">
+      <label for="examCourse">Filter by Course: </label>
+      <select id="examCourse" onchange="filterExamTable()">
+        <option value="all">All</option>
+        <option value="Molecular Plant Breeding">Molecular Plant Breeding</option>
+        <option value="Plant Breeding – Practical Exercises">Plant Breeding – Practical Exercises</option>
+        <option value="Genetics of Diversity">Genetics of Diversity</option>
+        <option value="Resistance Breeding of Crop Plants">Resistance Breeding of Crop Plants</option>
+      </select>
+    </div>
+
+    <div class="filter">
+      <label for="examDate">Filter by Date: </label>
+      <input type="date" id="examDate" onchange="filterExamTable()">
+      <button onclick="resetExamDateFilter()">Reset</button>
+    </div>
+
+    <!-- Mini Loader -->
+    <div id="miniLoader"><div class="mini-loading"></div></div>
+
+    <!-- Exam Routine Table -->
+    <table id="examTable">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Course</th>
+          <th>Location</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>05.02.2026</td>
+          <td>09:00–11:00</td>
+          <td>Molecular Plant Breeding</td>
+          <td>HS 11 / MENH</td>
+        </tr>
+        <tr>
+          <td>12.02.2026</td>
+          <td>14:00–16:00</td>
+          <td>Plant Breeding – Practical Exercises</td>
+          <td>SR 22 / MENH</td>
+        </tr>
+        <tr>
+          <td>20.02.2026</td>
+          <td>10:00–12:00</td>
+          <td>Genetics of Diversity</td>
+          <td>SR 23 / MENH</td>
+        </tr>
+        <tr>
+          <td>27.02.2026</td>
+          <td>13:00–15:00</td>
+          <td>Resistance Breeding of Crop Plants</td>
+          <td>SR 22 / MENH</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Scripts -->
+  <script src="exam.js"></script>
+</body>
+</html>

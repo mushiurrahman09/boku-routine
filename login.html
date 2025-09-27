@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* Animated gradient background */
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(-45deg, #4CAF50, #2196F3, #9C27B0, #FF9800);
+      background-size: 400% 400%;
+      animation: gradientBG 12s ease infinite;
+    }
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Login card */
+    .card {
+        background: #fff;
+        padding: 32px 28px;
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        width: 100%;
+        max-width: 380px;
+        text-align: center;
+        animation: fadeInUp 0.7s ease;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
+    }
+    .muted {
+      color: #555;
+      margin: 0 0 20px;
+      font-size: 15px;
+    }
+
+    input {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 15px;
+        border: 1px solid #ccd3da;
+        border-radius: 8px;
+        font-size: 15px;
+        box-sizing: border-box; /* ✅ ensures it fits card */
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #4CAF50;
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      font-weight: 700;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+    button:hover { background: #388E3C; }
+
+    .err {
+      margin-top: 12px;
+      color: #c0342b;
+      font-weight: 600;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Welcome</h1>
+    <p class="muted">Enter the access code to continue.</p>
+    <form id="loginForm">
+      <input id="code" type="password" placeholder="Access code" autocomplete="current-password" required />
+      <button type="submit">Unlock</button>
+      <div id="err" class="err">Incorrect code. Try again.</div>
+    </form>
+  </div>
+
+  <script src="auth.js"></script>
+  <script>
+    // If already authed, skip login
+    if (isAuthed()) {
+      const next = new URLSearchParams(location.search).get("next") || "index.html";
+      location.replace(next);
+    }
+
+    document.getElementById("loginForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const ok = await verifyCode(document.getElementById("code").value);
+      if (ok) {
+        const next = new URLSearchParams(location.search).get("next") || "index.html";
+        location.replace(next);
+      } else {
+        const err = document.getElementById("err");
+        err.style.display = "block";
+      }
+    });
+  </script>
+</body>
+</html>
