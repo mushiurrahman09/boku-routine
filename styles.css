@@ -94,6 +94,19 @@
 }
 .home-btn:hover { background-color: #1976D2; }
 
+.calendar-btn {
+  background-color: #2196F3;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.1s;
+}
+.calendar-btn:hover { background-color: #1976D2; }
+
 /* Logout button */
 .logout-btn {
   background-color: #f44336; /* red */
@@ -124,8 +137,65 @@
   transition: opacity 0.8s ease;
 }
 
-body { font-family: Arial, sans-serif; margin: 20px; }
-h2 { text-align: center; }
+body {
+  text-align: center;
+  min-height: 100vh;
+  margin: 0;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Global font style for the whole project */
+body, button, input, select, textarea, h1, h2, h3, h4, h5, h6, table, th, td, label, .subtitle {
+  font-family: 'Inter', 'Segoe UI', 'Roboto', Arial, sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
+
+/* Optional: Add font smoothing for better appearance */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Add floating circles for extra effect */
+body::before {
+  content: '';
+  position: fixed;
+  top: -100px;
+  left: -100px;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, #b6e0fe 60%, transparent 100%);
+  opacity: 0.5;
+  z-index: -1;
+  animation: float1 12s infinite linear alternate;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  bottom: -120px;
+  right: -120px;
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle, #fbc2eb 60%, transparent 100%);
+  opacity: 0.4;
+  z-index: -1;
+  animation: float2 16s infinite linear alternate;
+}
+
+@keyframes float1 {
+  0% { transform: translateY(0) scale(1); }
+  100% { transform: translateY(60px) scale(1.1); }
+}
+
+@keyframes float2 {
+  0% { transform: translateY(0) scale(1); }
+  100% { transform: translateY(-40px) scale(1.05); }
+}
 
 /* Table */
 table { border-collapse: collapse; width: 100%; font-size: 14px; }
@@ -173,7 +243,13 @@ tr.date-header td {
     background:#E8F5E9;
     box-shadow:0 1px 3px rgba(0,0,0,.06);
   }
-  tr.date-header td { border:none; }
+  tr.date-header td {  
+  background:#E8F5E9;
+  color:#2E7D32;
+  font-weight:700;
+  text-align:center;
+  border-left:4px solid #4CAF50;
+}
   tr.date-header td::before { content:""; }
 }
 
@@ -237,5 +313,491 @@ tr.date-header td {
     display: block;
     margin-bottom: 4px;
     color: #4CAF50;
+  }
+}
+
+/* Calendar Styles */
+#calendarContainer {
+  margin: 30px auto 20px auto;
+  max-width: 650px;      /* Increased calendar width */
+  min-width: 400px;
+  background: rgba(255,255,255,0.85);
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  padding: 18px 12px 24px 12px;
+}
+
+#calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;             /* Slightly larger gap */
+  margin-top: 10px;
+  min-height: 420px;     /* Increased calendar height */
+}
+.calendar-day {
+  background: #e0eafc;
+  border-radius: 8px;
+  min-height: 60px;
+  padding: 4px 2px;
+  font-size: 13px;
+  position: relative;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+.calendar-day.today {
+  border: 2px solid #4CAF50;
+}
+.calendar-event {
+  background: #4CAF50;
+  color: #fff;
+  border-radius: 6px;
+  padding: 2px 4px;
+  font-size: 12px;
+  margin-top: 2px;
+  display: block;
+  text-align: left;
+  white-space: normal;
+}
+.calendar-header {
+  background: #4CAF50 !important;
+  color: #fff !important;
+  font-weight: bold;
+  border-radius: 8px 8px 0 0;
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Modal Styles */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 10000;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  overflow: auto;
+  background: rgba(0,0,0,0.4);
+}
+.modal-content {
+  background: #fff;
+  margin: 40px auto;
+  padding: 24px 16px 16px 16px;
+  border-radius: 16px;
+  max-width: 700px;      /* Increased width */
+  min-width: 400px;
+  min-height: 520px;     /* Increased height */
+  box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+  position: relative;
+}
+.close-btn {
+  position: absolute;
+  top: 12px;
+  right: 18px;
+  font-size: 28px;
+  font-weight: bold;
+  color: #888;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.close-btn:hover { color: #f44336; }
+
+/* Event Detail Modal Specific Styles */
+#eventDetailModal .modal-content {
+  background: linear-gradient(135deg, #e0eafc 0%, #fbc2eb 100%);
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(76,175,80,0.12), 0 2px 8px rgba(0,0,0,0.08);
+  max-width: 370px;
+  min-width: 220px;
+  min-height: 140px;
+  padding: 28px 20px 24px 20px;
+  text-align: left;
+  position: relative;
+  border: 1.5px solid #b6e0fe;
+  animation: modalPop 0.35s cubic-bezier(.68,-0.55,.27,1.55);
+  /* No blur or opacity overlays */
+}
+
+#eventDetailBody {
+  font-size: 16px;
+  color: #222 !important;
+  margin-top: 10px;
+  line-height: 1.7;
+  letter-spacing: 0.01em;
+  background: #fff;
+  border-radius: 12px;
+  padding: 12px 14px;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.04);
+  position: relative;
+  z-index: 1;
+}
+
+#eventDetailBody strong {
+  color: #388E3C !important;
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: 0.02em;
+}
+
+#eventDetailBody span {
+  color: #1976D2 !important;
+  font-weight: 500;
+}
+
+#eventDetailModal .close-btn {
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  font-size: 26px;
+  font-weight: bold;
+  color: #888;
+  cursor: pointer;
+  transition: color 0.2s, transform 0.2s;
+  z-index: 2;
+}
+#eventDetailModal .close-btn:hover {
+  color: #f44336;
+  transform: scale(1.2) rotate(90deg);
+}
+
+/* Responsive adjustments for mobile and tablets */
+@media (max-width: 900px) {
+  .modal-content {
+    max-width: 98vw;
+    min-width: 0;
+    min-height: 60vh;
+    padding: 12px 4px 12px 4px;
+  }
+  #calendarContainer {
+    max-width: 98vw;
+    min-width: 0;
+    padding: 10px 2px 16px 2px;
+  }
+  #calendar {
+    gap: 4px;
+    min-height: 280px;
+    font-size: 12px;
+  }
+  .calendar-day, .calendar-header {
+    min-height: 38px;
+    font-size: 12px;
+    padding: 2px 1px;
+  }
+  .close-btn {
+    font-size: 24px;
+    top: 8px;
+    right: 10px;
+  }
+  .header-controls {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .top-left, .top-right {
+    position: static;
+    margin: 8px 0;
+    font-size: 13px;
+  }
+  .top-right {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .exam-btn, .calendar-btn, .logout-btn, .home-btn {
+    padding: 7px 10px;
+    font-size: 13px;
+    border-radius: 5px;
+  }
+  table {
+    font-size: 12px;
+  }
+  th, td {
+    padding: 5px;
+  }
+  .filter {
+    margin: 10px 0;
+  }
+}
+
+/* --- New Responsive Filter Controls and Table Layout --- */
+@media (max-width: 600px) {
+  .filter {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    width: 100%;
+    padding: 0 8px;
+    box-sizing: border-box;
+  }
+  .filter label,
+  .filter select,
+  .filter input[type="date"],
+  .filter button {
+    width: 100%;
+    font-size: 15px;
+    margin-bottom: 6px;
+    box-sizing: border-box;
+  }
+
+  /* Filter by date field and reset button side by side */
+  .filter-date-group {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    width: 100%;
+  }
+  .filter-date-group input[type="date"] {
+    flex: 2;
+    min-width: 0;
+  }
+  .filter-date-group button {
+    flex: 1;
+    min-width: 0;
+  }
+
+  /* Table layout */
+  table {
+    width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+    overflow-x: auto !important;
+    font-size: 13px;
+    background-color: #e0eafc !important;
+  }
+  th, td {
+    word-break: break-word;
+    white-space: normal;
+    padding: 8px 4px;
+    font-size: 13px;
+  }
+  tr {
+    margin-bottom: 10px;
+    border-radius: 8px;
+    background: #fff !important;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+  th {
+    background-color: #4CAF50 !important;
+    color: #fff !important;
+    border: 1px solid #ddd !important;
+  }
+  td {
+    background-color: #fff !important;
+    color: #222 !important;
+    border: 1px solid #ddd !important;
+  }
+
+  /* Table header and row colors for mobile */
+  th {
+    background-color: #4CAF50 !important;
+    color: #fff !important;
+  }
+  td {
+    background-color: #fff !important;
+    color: #222 !important;
+  }
+  tr {
+    background-color: #fff !important;
+  }
+  tr:hover {
+    background-color: #f5f5f5 !important;
+  }
+  /* Reset button color */
+  button[type="button"], .reset-btn {
+    background-color: #4CAF50 !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 8px !important;
+    font-weight: bold !important;
+    font-size: 1rem !important;
+    box-shadow: 0 1px 8px rgba(0,0,0,0.08) !important;
+    transition: background 0.2s, color 0.2s !important;
+  }
+  button[type="button"]:hover, .reset-btn:hover {
+    background-color: #388E3C !important;
+    color: #fff !important;
+  }
+}
+
+/* Make sure filter controls stack on tablets too */
+@media (max-width: 900px) {
+  .filter {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    width: 100%;
+    padding: 0 8px;
+    box-sizing: border-box;
+  }
+  .filter label,
+  .filter select,
+  .filter input[type="date"],
+  .filter button {
+    width: 100%;
+    font-size: 15px;
+    margin-bottom: 6px;
+    box-sizing: border-box;
+  }
+  .filter-date-group {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    width: 100%;
+  }
+}
+
+/* Example HTML structure for filter by date group:
+<div class="filter">
+  <label for="course">Filter by Course:</label>
+  <select id="course">...</select>
+  <div class="filter-date-group">
+    <input type="date" id="date">
+    <button type="button">Reset</button>
+  </div>
+</div>
+*/
+
+/* --- End mobile tweaks --- */
+
+/* General table and card colors for mobile */
+@media (max-width: 600px) {
+  /* Table header */
+  th, .date-header {
+    background-color: #4CAF50 !important;
+    color: #fff !important;
+    font-weight: bold !important;
+    border-radius: 8px 8px 0 0 !important;
+    border: none !important;
+  }
+  /* Table cells and cards */
+  td, .course-details, .course-card {
+    background-color: #fff !important;
+    color: #222 !important;
+    border-radius: 8px !important;
+    border: none !important;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06) !important;
+  }
+  /* Date header row */
+  .date-header, .date-header td {
+    background-color: #e0eafc !important;
+    color: #388E3C !important;
+    font-weight: bold !important;
+    border-radius: 8px !important;
+  }
+  /* Reset button */
+  button[type="button"], .reset-btn, input[type="reset"] {
+    background-color: #4CAF50 !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 8px !important;
+    font-weight: bold !important;
+    font-size: 1rem !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08) !important;
+    transition: background 0.2s, color 0.2s !important;
+  }
+  button[type="button"]:hover, .reset-btn:hover, input[type="reset"]:hover {
+    background-color: #388E3C !important;
+    color: #fff !important;
+  }
+}
+
+/* Mobile view only: background color and box borders */
+@media (max-width: 600px) {
+  body {
+    background: #e0eafc !important;
+  }
+  #content {
+    background: #e0eafc !important;
+    padding: 8px !important;
+  }
+  /* Table, cards, and filter boxes */
+  table, .course-details, .course-card, .filter, .filter-date-group {
+    background-color: #fff !important;
+    border: 2px solid #b6e0fe !important;
+    border-radius: 10px !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06) !important;
+  }
+  th, .date-header {
+    background-color: #4CAF50 !important;
+    color: #fff !important;
+    border: 2px solid #b6e0fe !important;
+    border-radius: 8px 8px 0 0 !important;
+  }
+  td {
+    background-color: #fff !important;
+    color: #222 !important;
+    border: 2px solid #b6e0fe !important;
+    border-radius: 0 !important;
+  }
+  /* Reset button */
+  button[type="button"], .reset-btn, input[type="reset"] {
+    background-color: #4CAF50 !important;
+    color: #fff !important;
+    border: 2px solid #b6e0fe !important;
+    border-radius: 8px !important;
+    font-weight: bold !important;
+    font-size: 1rem !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08) !important;
+    transition: background 0.2s, color 0.2s !important;
+  }
+  button[type="button"]:hover, .reset-btn:hover, input[type="reset"]:hover {
+    background-color: #388E3C !important;
+    color: #fff !important;
+  }
+}
+
+/* Mobile view: match desktop table, card, and button colors and borders */
+@media (max-width: 600px) {
+  body, #content {
+    background: #e0eafc !important;
+  }
+  table {
+    background-color: #e0eafc !important;
+    border-collapse: collapse !important;
+    width: 100% !important;
+  }
+  th {
+    background-color: #4CAF50 !important;
+    color: #fff !important;
+    border: 1px solid #ddd !important;
+    font-weight: bold !important;
+    border-radius: 0 !important;
+    padding: 8px 4px !important;
+  }
+  td {
+    background-color: #fff !important;
+    color: #222 !important;
+    border: 1px solid #ddd !important;
+    border-radius: 0 !important;
+    padding: 8px 4px !important;
+  }
+  tr {
+    background-color: #fff !important;
+  }
+  tr:hover {
+    background-color: #f5f5f5 !important;
+  }
+  /* Reset button */
+  button[type="button"], .reset-btn, input[type="reset"] {
+    background-color: #4CAF50 !important;
+    color: #fff !important;
+    border: 1px solid #388E3C !important;
+    border-radius: 8px !important;
+    font-weight: bold !important;
+    font-size: 1rem !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08) !important;
+    transition: background 0.2s, color 0.2s !important;
+  }
+  button[type="button"]:hover, .reset-btn:hover, input[type="reset"]:hover {
+    background-color: #388E3C !important;
+    color: #fff !important;
+  }
+  /* Filter and filter group */
+  .filter, .filter-date-group {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
   }
 }

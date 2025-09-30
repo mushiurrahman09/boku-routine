@@ -24,16 +24,18 @@
       100% { background-position: 0% 50%; }
     }
 
-    /* Login card */
+    /* Login card with glassmorphism */
     .card {
-        background: #fff;
+        background: rgba(255,255,255,0.18);
         padding: 32px 28px;
-        border-radius: 12px;
-        box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        border-radius: 18px;
+        box-shadow: 0 8px 32px rgba(76,175,80,0.12), 0 2px 8px rgba(0,0,0,0.15);
         width: 100%;
         max-width: 380px;
         text-align: center;
         animation: fadeInUp 0.7s ease;
+        backdrop-filter: blur(16px);
+        border: 2px solid rgba(255,255,255,0.22);
     }
 
     @keyframes fadeInUp {
@@ -82,6 +84,31 @@
       color: #c0342b;
       font-weight: 600;
       display: none;
+    }
+
+    /* Mobile responsiveness */
+    @media (max-width: 600px) {
+      .card {
+        max-width: 98vw;
+        padding: 18px 8px;
+        margin: 24px auto;
+        border-radius: 14px;
+      }
+      h1 {
+        font-size: 1.4rem;
+      }
+      .muted {
+        font-size: 1rem;
+      }
+      input {
+        font-size: 1rem;
+        padding: 10px 8px;
+        margin-bottom: 14px;
+      }
+      button {
+        font-size: 1rem;
+        padding: 12px 0;
+      }
     }
   </style>
 </head>

@@ -7,6 +7,7 @@
 
   <!-- External CSS -->
   <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
    <!-- Auth script must be loaded first -->
   <script src="auth.js"></script>
   <script>
@@ -32,15 +33,18 @@
   </div>
   <div class="top-right">
     <button class="exam-btn" onclick="window.location.href='exam.html'">📝 Exam Routine</button>
+    <button class="calendar-btn" onclick="openCalendarModal()">📅 Calendar View</button>
     <button class="logout-btn" onclick="logout()">🔓 Logout</button>
   </div>
 </div>
 
-  <h2>📅 Semester 3 – BOKU Course Timetable (Winter 2025/26)</h2>
+  <h2 >📅 Semester 3 – BOKU Course Timetable (Winter 2025/26)</h2>
   <p style="text-align:center; font-style:italic;">
     Programme: EMPLANT+ Erasmus Mundus in Plant Breeding<br>
     Student: Anika Ibnat Raida
   </p>
+   
+</div>
 
   <!-- Filters -->
   <div class="filter">
@@ -160,6 +164,29 @@
       </tbody>
     </table>
   </div>
+
+ <!-- Calendar Modal -->
+<div id="calendarModal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeCalendarModal()">&times;</span>
+    <div id="calendarContainer">
+      <div style="text-align:center; margin-bottom:8px;">
+        <button id="prevMonthBtn">◀</button>
+        <span id="calendarMonthYear"></span>
+        <button id="nextMonthBtn">▶</button>
+      </div>
+      <div id="calendar"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Event Detail Modal -->
+<div id="eventDetailModal" class="modal">
+  <div class="modal-content" id="eventDetailContent">
+    <span class="close-btn" onclick="closeEventDetailModal()">&times;</span>
+    <div id="eventDetailBody"></div>
+  </div>
+</div>
 
   <!-- External JS -->
   <script src="scripts.js"></script>
